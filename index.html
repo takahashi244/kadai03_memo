@@ -42,11 +42,90 @@
     </header>
 
     <main class="main-content">
-      <!-- ここにメインコンテンツが入ります -->
+      <section class="search-section">
+        <h2 class="section-title">さがす</h2>
+        
+        <!-- 検索フォーム -->
+        <div class="search-form-container">
+          <form id="searchForm" class="search-form">
+            <div class="search-form-row">
+              <!-- 出身地 -->
+              <div class="form-group">
+                <label for="origin">出身地</label>
+                <select id="origin" name="origin" class="form-control">
+                  <option value="" selected>選択してください</option>
+                  <option value="part1">第1部 ファントムブラッド</option>
+                  <option value="part2">第2部 戦闘潮流</option>
+                  <option value="part3">第3部 スターダストクルセイダース</option>
+                  <option value="part4">第4部 ダイヤモンドは砕けない</option>
+                  <option value="part5">第5部 黄金の風</option>
+                  <option value="part6">第6部 ストーンオーシャン</option>
+                </select>
+              </div>
+              
+              <!-- 体型 -->
+              <div class="form-group">
+                <label for="bodyType">体型</label>
+                <select id="bodyType" name="bodyType" class="form-control">
+                  <option value="" selected>選択してください</option>
+                  <option value="slim">スリム</option>
+                  <option value="normal">普通</option>
+                  <option value="glamorous">グラマー</option>
+                  <option value="muscular">筋肉質</option>
+                  <option value="chubby">ぽっちゃり</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="search-form-row">
+              <!-- 性格 -->
+              <div class="form-group">
+                <label for="personality">性格</label>
+                <!-- 性格のセレクトボックス -->
+                <select id="personality" name="personality" class="form-control">
+                  <option value="" selected>選択してください</option>
+                  <option value="brave">勇敢・正義感タイプ</option>
+                  <option value="cool">クール・冷静沈着タイプ</option>
+                  <option value="trickster">お調子者・トリックスタータイプ</option>
+                  <option value="passion">熱血・情熱家タイプ</option> <!-- passionateからpassionに変更 -->
+                  <option value="ambitious">狡猾・野心家タイプ</option>
+                  <option value="pure">純粋・天然タイプ</option>
+                  <option value="support">仲間思い・サポートタイプ</option> <!-- supportiveからsupportに変更 -->
+                </select>
+              </div>
+              
+              <!-- 性別 -->
+              <div class="form-group">
+                <label for="gender">性別</label>
+                <select id="gender" name="gender" class="form-control">
+                  <option value="" selected>選択してください</option>
+                  <option value="male">男</option>
+                  <option value="female">女</option>
+                  <option value="unknown">不明</option>
+                </select>
+              </div>
+            </div>
+            
+            <!-- 検索ボタン -->
+            <div class="search-button-container">
+              <button type="submit" id="searchButton" class="search-button">検索</button>
+            </div>
+          </form>
+        </div>
+        
+        <!-- 検索結果表示エリア -->
+        <div class="search-results">
+          <h3 class="results-title">検索結果 <span id="resultCount">0</span>件</h3>
+          <div id="resultsContainer" class="results-container">
+            <!-- 検索結果がここに表示されます -->
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- スクリプト -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/jojo_characters.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

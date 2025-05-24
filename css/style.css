@@ -1,4 +1,25 @@
-/* 全体のリセットとベース設定 */
+/* CSS変数の定義 */
+:root {
+  --primary: #ff6b6b;
+  --primary-hover: #ff5252;
+  --text: #333;
+  --text-light: #666;
+  --text-lighter: #777;
+  --bg: #f8f8f8;
+  --white: #ffffff;
+  --border: #ddd;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 5px 15px rgba(0, 0, 0, 0.15);
+  --radius: 10px;
+  --radius-btn: 25px;
+  --space-xs: 5px;
+  --space-sm: 10px;
+  --space-md: 15px;
+  --space-lg: 20px;
+  --header-height: 60px;
+}
+
+/* リセットとベース */
 * {
   margin: 0;
   padding: 0;
@@ -7,33 +28,31 @@
 
 body {
   font-family: 'Kaisei Opti', serif;
-  background-color: #f8f8f8;
-  color: #333;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
-/* ヘッダースタイル */
+/* ヘッダー */
 .app-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+  box-shadow: var(--shadow);
   z-index: 1000;
 }
 
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 var(--space-md);
 }
 
 .nav-list {
   display: flex;
   list-style: none;
-  justify-content: space-around;
-  align-items: center;
-  height: 60px;
+  height: var(--header-height);
 }
 
 .nav-item {
@@ -46,53 +65,211 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
+  color: var(--text-lighter);
   text-decoration: none;
-  color: #777;
   font-size: 0.9rem;
-  padding: 10px 0;
-  transition: all 0.3s ease;
+  transition: color 0.3s;
 }
 
 .nav-link i {
   font-size: 1.5rem;
-  margin-bottom: 5px;
+  margin-bottom: var(--space-xs);
 }
 
 .nav-item.active .nav-link {
-  color: #ff6b6b;
+  color: var(--primary);
 }
 
-/* アクティブ状態のアイコンに下線または特別な効果を追加 */
-.nav-item.active .nav-link::after {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 3px;
-  background-color: #ff6b6b;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.nav-item.active .nav-link::after {
-  transform: scaleX(1);
-}
-
-/* メインコンテンツ用のスタイル */
+/* メインコンテンツ */
 .main-content {
-  margin-top: 70px; /* ヘッダーの高さよりも少し大きめに */
-  padding: 20px 15px;
+  margin-top: calc(var(--header-height) + var(--space-sm));
+  padding: var(--space-md);
+}
+
+/* 検索セクション */
+.search-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--space-md);
+}
+
+.section-title {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+/* フォーム要素 */
+.search-form-container {
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  margin-bottom: 30px;
+}
+
+.search-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: var(--space-xs);
+  font-weight: bold;
+}
+
+/* 入力要素 */
+.form-control {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: all 0.3s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+}
+
+/* ボタン共通スタイル */
+.search-button, .like-button {
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: var(--radius-btn);
+}
+
+/* 検索ボタン */
+.search-button-container {
+  text-align: center;
+  margin-top: var(--space-md);
+}
+
+.search-button {
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 12px 40px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.search-button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* 検索結果 */
+.search-results {
+  margin-top: 30px;
+}
+
+.results-title {
+  font-size: 1.2rem;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid #eee;
+}
+
+.results-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-lg);
+}
+
+/* カードデザイン */
+.result-card {
+  background-color: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.result-image {
+  height: 200px;
+}
+
+.result-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.result-info {
+  padding: var(--space-md);
+}
+
+/* テキストスタイル統合 */
+.result-name {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-xs);
+}
+
+.result-details, .result-description {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: var(--space-xs);
+}
+
+.result-description {
+  line-height: 1.4;
+  max-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* いいねボタン */
+.result-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-sm);
+}
+
+.like-button {
+  background-color: var(--white);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 5px 15px;
+  font-size: 0.9rem;
+}
+
+.like-button:hover, .like-button.liked {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+/* メッセージスタイル */
+.no-results {
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--text-light);
+  font-style: italic;
 }
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
-  .nav-link {
-    font-size: 0.8rem;
-  }
-  
-  .nav-link i {
-    font-size: 1.2rem;
-  }
+  .nav-link { font-size: 0.8rem; }
+  .nav-link i { font-size: 1.2rem; }
+  .search-form-row { flex-direction: column; gap: var(--space-md); }
+  .form-group { min-width: 100%; }
 }
