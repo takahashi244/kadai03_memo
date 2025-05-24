@@ -153,27 +153,6 @@ function displaySearchResults(results) {
     
     $resultsContainer.append($resultCard);
   });
-  
-  // 説明文のテキストサイズを自動調整
-  adjustDescriptionTextSize();
-}
-
-// 説明文のテキストサイズ自動調整関数
-function adjustDescriptionTextSize() {
-  $('.result-description').each(function() {
-    const $description = $(this);
-    const text = $description.text();
-    const defaultFontSize = parseInt($description.css('font-size'));
-    
-    // 文字数に基づいてフォントサイズを調整
-    if (text.length > 120) {
-      // 非常に長いテキスト（120文字以上）
-      $description.css('font-size', (defaultFontSize - 2) + 'px');
-    } else if (text.length > 80) {
-      // 長めのテキスト（80-120文字）
-      $description.css('font-size', (defaultFontSize - 1) + 'px'); 
-    }
-  });
 }
 
 // いいねの切り替え処理
