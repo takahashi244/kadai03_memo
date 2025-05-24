@@ -2,15 +2,6 @@
 $(document).ready(function() {
   // 閲覧履歴一覧を表示
   displayHistoryCharacters();
-  
-  // いいねボタンのイベント処理
-  $(document).on('click', '.like-button', function() {
-    const characterId = $(this).data('id');
-    toggleLike(characterId);
-    
-    // いいねボタンの表示を更新
-    $(this).toggleClass('liked');
-  });
 });
 
 // 閲覧履歴のキャラクター一覧を表示
