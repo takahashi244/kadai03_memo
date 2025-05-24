@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>いいね - ジョジョの奇妙なマッチングアプリ</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@700&family=Kaisei+Opti&family=Klee+One&family=Shippori+Mincho&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="app-header">
+      <nav class="nav-container">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">
+              <i class="fas fa-search"></i>
+              <span>さがす</span>
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a href="likes.html" class="nav-link">
+              <i class="fas fa-heart"></i>
+              <span>いいね</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="history.html" class="nav-link">
+              <i class="fas fa-history"></i>
+              <span>閲覧履歴</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <section class="search-section">
+        <h2 class="section-title">いいね</h2>
+        
+        <!-- いいね一覧表示エリア -->
+        <div class="search-results">
+          <h3 class="results-title">いいねしたキャラクター <span id="likeCount">0</span>件</h3>
+          <div id="likesContainer" class="results-container">
+            <!-- いいね一覧がここに表示されます -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- スクリプト -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/jojo_characters.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/likes.js"></script>
+  </body>
+</html>

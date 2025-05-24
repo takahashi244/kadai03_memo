@@ -1,32 +1,25 @@
 // ページ読み込み時の処理
 $(document).ready(function() {
-  // 現在のページURLを取得
+  // 現在のページURLを取得とナビゲーション初期化
   const currentPage = window.location.pathname.split('/').pop();
   
-  // 各ナビゲーションリンクのチェック
   $('.nav-link').each(function() {
-    const linkHref = $(this).attr('href');
-    
-    // リンクのhref属性が現在のページと一致する場合、親要素にactiveクラスを追加
-    if (linkHref === currentPage) {
+    if ($(this).attr('href') === currentPage) {
       $(this).parent().addClass('active').siblings().removeClass('active');
     }
   });
   
-  // ナビゲーションのリンククリック時の処理
+  // ナビゲーションクリック処理
   $('.nav-link').on('click', function() {
-    // 全てのナビアイテムからactiveクラスを削除し、クリックされた要素の親要素にactiveクラスを追加
     $('.nav-item').removeClass('active');
     $(this).parent().addClass('active');
   });
   
-  // モックデータをLocalStorageに保存（初期データ）
+  // データと機能の初期化
   initializeCharacterData();
-  
-  // 検索フォームの処理を初期化
   initializeSearchForm();
   
-  // いいねボタンのイベント処理を追加
+  // いいねボタンのイベント処理
   $(document).on('click', '.like-button', function() {
     const characterId = $(this).data('id');
     toggleLike(characterId);
@@ -34,25 +27,22 @@ $(document).ready(function() {
   });
 });
 
-// キャラクターデータを取得する関数（外部ファイルのデータを利用）
+// キャラクターデータを取得する関数
 function getCharacterData() {
   return jojoCharacters; // 外部ファイルで定義された変数を返す
 }
 
 // キャラクターデータを初期化する関数
 function initializeCharacterData() {
-  // すでにデータがある場合は初期化しない
+  // 既存データがある場合は初期化不要
   if (localStorage.getItem('jojoCharacters')) {
     return;
   }
   
-  // キャラクターの初期データを関数から取得
-  const characterData = getCharacterData();
+  // キャラクターデータを保存
+  localStorage.setItem('jojoCharacters', JSON.stringify(getCharacterData()));
   
-  // LocalStorageにデータを保存
-  localStorage.setItem('jojoCharacters', JSON.stringify(characterData));
-  
-  // いいねと閲覧履歴のデータ構造も初期化
+  // 関連データ構造の初期化
   if (!localStorage.getItem('jojoLikes')) {
     localStorage.setItem('jojoLikes', JSON.stringify([]));
   }
@@ -65,73 +55,59 @@ function initializeCharacterData() {
 // 検索フォームの初期化
 function initializeSearchForm() {
   $('#searchForm').on('submit', function(e) {
-    e.preventDefault(); // フォームのデフォルト送信を防止
+    e.preventDefault();
     
-    // フォームの値を取得
+    // フォーム値取得
     const origin = $('#origin').val();
     const bodyType = $('#bodyType').val();
     const personality = $('#personality').val();
     const gender = $('#gender').val();
     
-    // 検索条件をコンソールに表示（デバッグ用）
-    console.log('検索条件:', {
-      出身地: origin,
-      体型: bodyType,
-      性格: personality,
-      性別: gender
-    });
-    
-    // LocalStorageから条件に合うキャラクターを検索
+    // 検索と結果表示
     const results = searchCharacters(origin, bodyType, personality, gender);
-    
-    // 結果を表示
     displaySearchResults(results);
   });
 }
 
-// キャラクターを検索する関数（完全版）
+// キャラクターを検索する関数
 function searchCharacters(origin, bodyType, personality, gender) {
-  // LocalStorageからキャラクターデータを取得
   const characters = JSON.parse(localStorage.getItem('jojoCharacters'));
   
-  // 条件に合うキャラクターをフィルタリング
+  // 条件によるフィルタリング
   return characters.filter(character => {
-    // 各条件をチェック（空の場合はその条件を無視）
     const matchOrigin = origin ? character.origin === origin : true;
     const matchBodyType = bodyType ? character.bodyType === bodyType : true;
     const matchPersonality = personality ? character.personality === personality : true;
     const matchGender = gender ? character.gender === gender : true;
     
-    // すべての条件にマッチするものだけを返す
     return matchOrigin && matchBodyType && matchPersonality && matchGender;
   });
 }
 
-// 検索結果を表示する関数（完全版）
+// 検索結果を表示する関数
 function displaySearchResults(results) {
-  // 結果の数を表示
-  $('#resultCount').text(results.length);
-  
-  // 結果をクリアして新しい結果を表示
   const $resultsContainer = $('#resultsContainer');
   $resultsContainer.empty();
+  $('#resultCount').text(results.length);
   
-  // 結果がない場合のメッセージ
+  // 結果がない場合
   if (results.length === 0) {
     $resultsContainer.append('<p class="no-results">条件に一致するキャラクターが見つかりませんでした</p>');
     return;
   }
   
+  // いいねリストを一度だけ取得（パフォーマンス向上）
+  const likes = JSON.parse(localStorage.getItem('jojoLikes')) || [];
+  
   // 各結果をDOMに追加
   results.forEach(result => {
-    // いいね済みかどうかをチェック
-    const likes = JSON.parse(localStorage.getItem('jojoLikes')) || [];
-    const isLiked = likes.includes(result.id);
-    
     // 閲覧履歴に追加
     addToHistory(result.id);
     
-    // 結果カードを作成して追加
+    // いいね状態の確認
+    const isLiked = likes.includes(result.id);
+    
+    // 結果カード生成
     const $resultCard = $(`
       <div class="result-card">
         <div class="result-image">
@@ -157,30 +133,24 @@ function displaySearchResults(results) {
 
 // いいねの切り替え処理
 function toggleLike(characterId) {
-  // LocalStorageからいいねリストを取得
   const likes = JSON.parse(localStorage.getItem('jojoLikes')) || [];
-  
-  // いいね済みかどうかをチェック
   const index = likes.indexOf(characterId);
   
+  // いいね追加/削除
   if (index === -1) {
-    // いいねしていなければ追加
     likes.push(characterId);
   } else {
-    // いいね済みなら削除
     likes.splice(index, 1);
   }
   
-  // LocalStorageに保存
   localStorage.setItem('jojoLikes', JSON.stringify(likes));
 }
 
 // 閲覧履歴に追加する関数
 function addToHistory(characterId) {
-  // LocalStorageから閲覧履歴を取得
   const history = JSON.parse(localStorage.getItem('jojoHistory')) || [];
   
-  // 既に履歴にあれば削除（新しい位置に追加するため）
+  // 既存履歴から削除（重複防止）
   const index = history.indexOf(characterId);
   if (index !== -1) {
     history.splice(index, 1);
@@ -192,6 +162,5 @@ function addToHistory(characterId) {
   // 履歴は最大20件まで
   const limitedHistory = history.slice(0, 20);
   
-  // LocalStorageに保存
   localStorage.setItem('jojoHistory', JSON.stringify(limitedHistory));
 }
