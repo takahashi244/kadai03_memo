@@ -6,8 +6,7 @@
 - 各キャラクターの詳細情報（出身、性格、体型など）を表示し、お気に入りや履歴管理ができる
 - 直感的なUIでキャラクターとの相性を探せるWebアプリケーション
 
-![image](https://github.com/user-attachments/assets/6aedc366-0fde-4aa1-97a6-682d15078e0d)
-
+![image](https://github.com/user-attachments/assets/2d906366-41b6-4f24-b8d8-0b9812b63ee6)
 
 ## ③アプリのデプロイURL
 https://takahashi244.github.io/kadai03_memo/
