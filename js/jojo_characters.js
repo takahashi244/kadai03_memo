@@ -626,7 +626,7 @@ const jojoCharacters = [
     bodyTypeText: "スリム",
     gender: "male",
     genderText: "男",
-    image: "id40.jpg", 
+    image: "image/id40.jpg", 
     description:
       "誠実で真面目な高校生。強い責任感と友情を持ち、仲間を支える。エコーズの使い手。",
   },
